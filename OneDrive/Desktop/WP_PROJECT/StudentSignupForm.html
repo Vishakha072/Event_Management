@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentSihnupForm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        
+        body {
+            height: 100vh;
+            background: url('1.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+    
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.55);
+            z-index: 0;
+        }
+        
+        .signup {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            color: #fff;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1s ease-out;
+        }
+    
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .signup h2 {
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+    
+        .signup input {
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.85);
+            color: #333;
+        }
+    
+        .signup button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+    
+        .signup button:hover {
+            background-color: #0056b3;
+        }
+    
+        .signup p, .signup a {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: white;
+            text-decoration: none;
+        }
+    
+        .signup a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<script>
+    document.getElementById("studentSignupForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            id: e.target.elements.SAP.value,
+            username: e.target.elements.Username.value,
+            email: e.target.elements.Email.value,
+            branch: e.target.elements.Branch.value,
+            course: e.target.elements.Course.value,
+            year: e.target.elements.Year.value,
+            contact: e.target.elements.Contact.value,
+            password: e.target.elements['Create Password'].value
+        };
+    
+        try {
+            const response = await fetch('http://localhost:3000/student-signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+    
+            const result = await response.json();
+            
+            if (response.ok) {
+                alert('Signup successful!');
+                window.location.href = 'ViewEvents.html';
+            } else {
+                alert('Signup failed: ' + (result.message || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Signup failed. Please try again.');
+        }
+    });
+</script>
+
+<body>
+    <div class="signup">
+        <h2>Student signup</h2>
+        <form method="post">
+            <label>SAP ID:</label>
+            <input name="SAP" type="number" placeholder="eg. 70552300020">
+            
+            <label>Useranme:</label>
+            <input name="Username" type="text" placeholder="eg. Alex">
+            
+            <label>Email:</label>
+            <input name="Email" type="email" placeholder="eg. alex123@gmail.com">
+            
+            <label>Branch:</label>
+            <input name="Branch" type="text" placeholder="eg. Btech">
+            
+            <label>Course:</label>
+            <input name="Course" type="text" placeholder="eg. Computer Science">
+            
+            <label>Year:</label>
+            <input name="Year" type="number" placeholder="eg. 1">
+            
+            <label>Contact:</label>
+            <input name="Contact" type="number" placeholder="eg. 1111111111">
+            
+            <label>Password:</label>
+            <input name="Create Password" type="password">
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <p>Already have an account?</p>
+        <a href="StudentLogin.html">Log In</a>
+    </div>
+</body>
+</html>

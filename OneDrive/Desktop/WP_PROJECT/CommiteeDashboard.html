@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Event Cards</title>
+  <style>
+    * {
+      font-family: Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .card {
+      width: 200px;
+      border: 1px solid #aaa;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: 0.3s;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .card-header {
+      padding: 10px;
+      background-color: #f8f8f8;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      background-color: #f0f0f0;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+
+    .card-details.show {
+      max-height: 200px;
+      padding: 10px;
+    }
+
+    .card-details p {
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .register-btn, .delete-btn {
+      flex: 1;
+      padding: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid #333;
+      background-color: white;
+      border-radius: 4px;
+    }
+
+    .delete-btn {
+      background-color: #ffe5e5;
+      color: red;
+    }
+
+    form {
+      margin: 20px auto;
+      width: 300px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    form input, form button {
+      width: 100%;
+      padding: 8px;
+      margin: 8px 0;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Add New Event</h2>
+<form id="eventForm">
+  <input type="text" id="eventName" placeholder="Event Name" required>
+  <input type="text" id="eventDate" placeholder="Date" required>
+  <input type="text" id="eventTime" placeholder="Time" required>
+  <input type="text" id="eventVenue" placeholder="Venue" required>
+  <input type="url" id="eventImage" placeholder="Image URL (optional)">
+  <button type="submit">Add Event</button>
+</form>
+
+<div class="container" id="cardContainer">
+  <!-- Event cards appear here -->
+</div>
+
+<script>
+  const form = document.getElementById('eventForm');
+  const cardContainer = document.getElementById('cardContainer');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); // prevent form reload
+
+    // Get form values
+    const name = document.getElementById('eventName').value;
+    const date = document.getElementById('eventDate').value;
+    const time = document.getElementById('eventTime').value;
+    const venue = document.getElementById('eventVenue').value;
+    const image = document.getElementById('eventImage').value || "https://via.placeholder.com/200x120";
+
+    // Create card element
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = function () { toggleDetails(card); };
+
+    card.innerHTML = `
+      <img src="${image}" alt="Event Image">
+      <div class="card-header">${name}</div>
+      <div class="card-details">
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Time:</strong> ${time}</p>
+        <p><strong>Venue:</strong> ${venue}</p>
+        <div class="btn-group">
+          <button class="register-btn">Register</button>
+          <button class="delete-btn" onclick="deleteCard(event)">Delete</button>
+        </div>
+      </div>
+    `;
+
+    // Add card to container
+    cardContainer.appendChild(card);
+
+    // Reset form
+    form.reset();
+  });
+
+  function toggleDetails(card) {
+    const details = card.querySelector('.card-details');
+    details.classList.toggle('show');
+  }
+
+  function deleteCard(event) {
+    event.stopPropagation(); // don’t trigger toggle
+    const card = event.target.closest('.card');
+    card.remove();
+  }
+</script>
+
+</body>
+</html>

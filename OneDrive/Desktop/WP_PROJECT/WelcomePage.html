@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventSphere.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<script>
+    function goToStudent(){
+        window.location.href="StudentSignupForm.html";
+    }
+    function goToAdmin(){
+        window.location.href="AdminLogin.html";
+    }
+</script>
+
+<body>
+    <div class="container">
+        <h1 align="center">Welcome to Event Sphere!!!!</h1>
+        <h3 align="center">Plan. Participate. Celebrate.</h3>
+        <p>Select your role:</p><br>
+        <button onclick="goToStudent()">Student</button>
+        <button onclick="goToAdmin()">Commitee</button>
+    </div>
+</body>
+</html>

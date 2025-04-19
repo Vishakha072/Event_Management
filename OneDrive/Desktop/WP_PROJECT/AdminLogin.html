@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminLoginForm</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        body {
+            height: 100vh;
+            background: url('1.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.55);
+            z-index: 0;
+        }
+
+    
+        .AdminLogin {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 60px 80px;
+            border-radius: 25px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            color: #fff;
+            animation: fadeIn 1s ease-out;
+            max-width: 500px;
+        } 
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        input {
+            display: block;
+            margin: 15px auto;
+            padding: 10px;
+            width: 200px;
+        }
+    
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<script>
+    function goToDashboard(){
+        const adminId = document.getElementById("id").value;
+        const adminPassword = document.getElementById("pass").value;
+
+        if (adminId === "admin123" && adminPassword === "pass123"){
+            window.location.href="viewEventsAdmin.html";
+            return false;
+        } else {
+            alert("Invalid Login Credentials")
+            return false;
+        }
+    }
+</script>
+
+<body>
+    <div class="AdminLogin">
+        <h1>Login</h1>
+        <input  id="id" type="text" placeholder="User Id" required/>
+        <input id="pass" type="password" placeholder="Password" required/>
+        <button type="submit" onclick="goToDashboard()">Login</button>
+    </div>
+</body>
+</html>
